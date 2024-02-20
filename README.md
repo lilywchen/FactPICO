@@ -1,7 +1,7 @@
 ls# FactPICO
 
 
-This repository contains the code and data used in the paper "FACTPICO: Factuality Evaluation for Plain Language Summarization of Medical Evidence." 
+This repository contains the code and data used in the paper ["FACTPICO: Factuality Evaluation for Plain Language Summarization of Medical Evidence."](https://arxiv.org/abs/2402.11456) 
 
 ![factpico](factpico.png)
 
@@ -9,7 +9,7 @@ Please contact Sebastian Joseph (sebaj@utexas.edu) or Lily Chen (l1ly@mit.edu) i
 
 ## Citation
 
-If you found any of these resources useful, please consider citing the following paper.
+If you found any of these resources useful, please consider citing the [FactPICO paper](https://arxiv.org/abs/2402.11456).
 
 ```{bibtex}
 @misc{joseph2024factpico,
