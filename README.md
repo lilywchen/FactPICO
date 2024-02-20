@@ -1,4 +1,4 @@
-ls# FactPICO
+## FactPICO
 
 
 This repository contains the code and data used in the paper ["FACTPICO: Factuality Evaluation for Plain Language Summarization of Medical Evidence."](https://arxiv.org/abs/2402.11456) 
