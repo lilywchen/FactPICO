@@ -92,29 +92,26 @@ gpt_client = load_api_keys()
 
 for model in models:
     
+    m_type = 'gpt-4' if model == 'gpt-4' else model.split("/")[1]
     ele = "result"
-    if model == 'gpt-4':
-        if f'gpt-4_{ele}' not in df.columns:
-            df[f'gpt-4_{ele}'] = "did not generate"
-    else:            
-        m_type = model.split("/")[1]
-        if f'{m_type}_{ele}' not in df.columns:
-            df[f'{m_type}_{ele}'] = 'did not generate'
+    col_name = f'{m_type}_{ele}'
+    
+    if col_name not in df.columns:
+        df[col_name] = 'did not generate'
 
     for i, row in tqdm(df.iterrows(), total=df.shape[0], leave=False):
-        m_type = 'gpt-4' if model == 'gpt-4' else model.split("/")[1]
         processing = True
         
-        if df.at[i, f'{m_type}_{ele}'] != 'did not generate':
+        if df.at[i, col_name] != 'did not generate':
             continue
         
         while processing:
             try: 
                 if model == 'gpt-4':
-                    df.at[i, f'gpt-4_{ele}'] = result_gen_gpt(row, gpt_client)
+                    df.at[i, col_name] = result_gen_gpt(row, gpt_client)
                 else:
                     m_type = model.split("/")[1]
-                    df.at[i, f'{m_type}_{ele}'] = result_gen_together(row, model)
+                    df.at[i, col_name] = result_gen_together(row, model)
                 processing = False
                 df.to_csv(filename)
             except Exception as error:

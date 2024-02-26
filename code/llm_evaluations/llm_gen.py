@@ -113,23 +113,23 @@ def is_float(string):
         return False
 
 for model in tqdm(models):
-    print(model)
+    #print(model)
+    
+    m_type = 'gpt-4' if model == 'gpt-4' else model.split("/")[1]
+    
     for ele in tqdm(info_label.keys(), leave=False):
-        print(ele)
-        if model == 'gpt-4':
-            if f'gpt-4_{ele}' not in df.columns:
-                df[f'gpt-4_{ele}'] = "did not generate"
-        else:            
-            m_type = model.split("/")[1]
-            if f'{m_type}_{ele}' not in df.columns:
-                df[f'{m_type}_{ele}'] = 'did not generate'
-        inc_time = 3
-        for i, row in tqdm(df.iterrows(), total=df.shape[0], leave=False):
-
-            m_type = 'gpt-4' if model == 'gpt-4' else model.split("/")[1]
+        #print(ele)
+        
+        col_name = f'{m_type}_{ele}'
             
-            if not pd.isna(df.at[i, f'{m_type}_{ele}']):
-                text = df.at[i, f'{m_type}_{ele}']
+        if col_name not in df.columns:
+            df[col_name] = 'did not generate' 
+                       
+
+        for i, row in tqdm(df.iterrows(), total=df.shape[0], leave=False):
+  
+            if not pd.isna(df.at[i, col_name]):
+                text = df.at[i, col_name]
                 if is_float(text) or "Rating: " in text:
                     continue
             
@@ -138,10 +138,10 @@ for model in tqdm(models):
                 try: 
                     if model == 'gpt-4':
                         #print("skip")
-                        df.at[i, f'gpt-4_{ele}'] = pico_gen_gpt(row, ele, gpt_client)
+                        df.at[i, col_name] = pico_gen_gpt(row, ele, gpt_client)
                     else:
                         m_type = model.split("/")[1]
-                        df.at[i, f'{m_type}_{ele}'] = pico_gen_together(row, ele, model)
+                        df.at[i, col_name] = pico_gen_together(row, ele, model)
                     processing = False
                 except Exception as error:
                     print(error)
