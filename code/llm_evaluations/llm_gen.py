@@ -137,11 +137,13 @@ for model in tqdm(models):
             while processing:
                 try: 
                     if model == 'gpt-4':
-                        print("skip")
+                        #print("skip")
+                        df.at[i, f'gpt-4_{ele}'] = pico_gen_gpt(row, ele, gpt_client)
                     else:
                         m_type = model.split("/")[1]
                         df.at[i, f'{m_type}_{ele}'] = pico_gen_together(row, ele, model)
                     processing = False
                 except Exception as error:
+                    print(error)
                     time.sleep(5)                            
             df.to_csv(filename)
